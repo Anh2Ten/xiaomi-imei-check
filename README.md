@@ -1,4 +1,7 @@
 # Xiaomi imei check
+
+HERE IS API: https://dailythuonghien.com/blog/xiaomi/api.php?imei= {yourimei}
+
 Xiaomi iMei Check No Captcha Super Fast Developer by @Anh2Ten
 Here Is Link: https://anh2ten.github.io/xiaomicheck
 Contact Me At (buy this script)
