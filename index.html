@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xiaomi IMEI Check</title>
-  <link href="./core.css" rel="stylesheet" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Xiaomi IMEI Check</title>
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="pace-top">
-<div id="app" class="app app-full-height app-without-header">
+
+<body>
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ffc107;">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">Xiaomi IMEI Check</a>
@@ -29,65 +31,64 @@
       </div>
     </div>
   </nav>
-  <div class="container"> 
-    <div class="login">
-      <div class="login-content">
-        <div class="login-header" style="text-align:center;">
+  
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="mb-3">
+                    <label for="imei" class="form-label">IMEI or Lock Code:</label>
+                    <input type="text" class="form-control" id="imei">
+                </div>
+                <button type="button" class="btn btn-outline-warning btn-lg d-block w-100 fw-500 mb-3" id="checkButton">Check</button>
+                <button type="button" class="btn btn-outline-warning btn-lg d-block w-100 fw-500 mb-3" id="historyButton">Show History</button>
+            </div>
         </div>
-        <div class="login-content">
-          <form action="#" id="loginform" method="GET" name="login_form">
-            <h4 class="text-center text-warning">Xiaomi IMEI Check</h4>
-            <div class="text-white text-opacity-50 text-center mb-4">
-              Check Mi Online
-            </div>
-            <div class="mb-3">
-              <div class="d-flex">
-                <label class="form-label">IMEI or lock code<span class="text-danger">*</span></label>
-                <a href="index.html#" class="ms-auto text-white text-decoration-none text-opacity-50"></a>
-              </div>
-              <input name="imei" id="imei" class="form-control form-control-lg bg-white bg-opacity-5" placeholder="IMEI or lock code" required autocomplete="off" />
-            </div>
-            <button type="button" class="btn btn-outline-warning btn-lg d-block w-100 fw-500 mb-3" id="checkButton">Check</button>
-            <button type="button" class="btn btn-outline-warning btn-lg d-block w-100 fw-500 mb-3" id="historyButton">Show History</button>
-          </form>
-          <div class="alert mt-3" role="alert" id="resultAlert" style="display: none;"></div>
-          <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
+
+        <div class="alert mt-3" role="alert" id="resultAlert" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="resultModalLabel">Check Result</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="resultModalLabel">Check Result</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="resultModalBody">
+                    
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
+        </div>
+    </div>
+
+    <div class="modal fade" id="historyModal" tabindex="-1" aria-labelledby="historyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="historyModalLabel">Check History</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="historyModalLabel">Check History</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="historyModalBody">
+
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
-              </div>
             </div>
-          </div>
-          <div id="footer" style="text-align:center;">
-            &copy; 2023 Anh2Ten - All Right Reserved
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <script src="./core.js"></script>
-  </body>
+
+  <link href="./core.css" rel="stylesheet" crossorigin="anonymous">
+ 
+  <script src="./core.js" crossorigin="anonymous"></script>
+</body>
+
 </html>
+
+
+
+ 
