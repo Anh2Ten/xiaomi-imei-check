@@ -1,3 +1,5 @@
+Buy Full script contact telegram @Anh2Ten
+
 MAIN API
 https://dailythuonghien.com/api/mi/
 
