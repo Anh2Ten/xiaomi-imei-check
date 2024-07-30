@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMEI Lookup</title> 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+ 
+  <style>
+    .status {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .status.off {
+      color: green;
+    }
+    .status.on {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>Check Quốc Gia</h2>
+    <form id="imeiForm">
+      <div class="form-group">
+        <label for="imeiInput">IMEI (Chỉ Chấp Nhận Imei):</label>
+        <input type="text" class="form-control" id="imeiInput" placeholder="Nhập IMEI" required>
+      </div>
+      <div class="form-group mt-3 mb-3">
+        <label for="captchaInput">CAPTCHA:</label>
+        <input type="text" class="form-control" id="captchaInput" placeholder="CAPTCHA" required>
+        <img id="captchaImg" src="" alt="CAPTCHA Image">
+        <button type="button" class="btn btn-secondary mt-2" onclick="getCaptcha()">Refresh CAPTCHA</button>
+      </div>
+      <button type="submit" class="btn btn-primary">Lookup IMEI</button>
+    </form>
+    <div id="statusMessage" class="status"></div>
+  </div>
+ 
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+ 
+  <script>
+    document.getElementById('imeiForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      lookupIMEI();
+    }); 
+    
+    function lookupIMEI() {
+      var imei = document.getElementById('imeiInput').value.trim();
+      var captcha = document.getElementById('captchaInput').value.trim();
+     
+      if (imei === '' || captcha === '') {
+        displayStatus('Please enter both IMEI and CAPTCHA.', 'error');
+        return;
+      }
+     
+      var apiUrl = 'https://api.quanlybanhang.store/mi/api.php?imei=' + encodeURIComponent(imei) + '&code=' + encodeURIComponent(captcha);
+     
+      fetch(apiUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          handleApiResponse(data);
+        })
+        .catch(error => {
+          if (error.message === 'Network response was not ok') {
+            displayStatus('IMEI hoặc CAPTCHA lỗi.', 'error');
+          } else {
+            console.error('Error fetching data:', error);
+            displayStatus('Error fetching data. Please try again later.', 'error');
+          }
+        });
+    }
+     
+    function getCaptcha() {
+      var captchaImg = document.getElementById('captchaImg');
+      captchaImg.src = 'https://api.quanlybanhang.store/mi/captcha.php';document.getElementById('captchaInput').value = '';  
+    }
+     
+    function handleApiResponse(data) {
+      var statusMessage = document.getElementById('statusMessage');
+      
+      if (data.status === 200 && data.message === 'FIND XIAOMI ON') {
+        var status = 'on';
+        var productInfo = `${data.product} (${data.country})`;
+        statusMessage.textContent = `IMEI status: ON - ${productInfo}`;
+        statusMessage.className = 'status on';
+      } else if (data.status === 200 && data.message !== 'FIND XIAOMI ON') {
+        statusMessage.textContent = 'IMEI status: OFF';
+        statusMessage.className = 'status off';
+      } else {
+        statusMessage.textContent = 'Invalid IMEI. Please check your input.';
+        statusMessage.className = 'status off';
+      }
+    }
+     
+    function displayStatus(message, type) {
+      var statusMessage = document.getElementById('statusMessage');
+      statusMessage.textContent = message;
+      statusMessage.className = 'status';
+      if (type === 'error') {
+        statusMessage.classList.add('off');
+      } else {
+        statusMessage.classList.add('on');
+      }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() { 
+      getCaptcha();
+    });
+  </script>
+</body>
+</html>
