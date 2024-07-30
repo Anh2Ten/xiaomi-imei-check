@@ -1,29 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-    <script type="module" crossorigin src="./assets/index-DjE1kFVF.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Cf5_eWQK.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QXV8WE953F" type="e1eec388ee1c7dbfc01fa1ad-text/javascript"></script>
-<script type="e1eec388ee1c7dbfc01fa1ad-text/javascript">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-QXV8WE953F');
-</script>
-<script type="e1eec388ee1c7dbfc01fa1ad-text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PBZHC9SQ');</script>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PBZHC9SQ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script src="https://www.vipads.live/vn/D9597A96-4A80-218-34-F0E8BF104EFC.blpha"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check IMEI</title> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center mb-4">Xiaomi IMEI Checker</h2>
+                <div class="input-group mb-3">
+                    <input type="text" id="imeiInput" class="form-control" placeholder="Nhập số IMEI...">
+                    <button class="btn btn-primary" type="button" onclick="checkIMEI()">Kiểm tra</button>
+                </div>
+<a class="text-primary text-center" href="./model.html">Kiểm Tra Quốc Gia Xiaomi</a>
+                <div id="result" class="mt-4"></div>
+            </div>
+        </div>
+    </div> 
+    <script>
+function checkIMEI() {
+    var imei = document.getElementById('imeiInput').value.trim();
+    var apiUrl = 'https://api.quanlybanhang.store/mi/fmi.php?imei=' + imei;
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.status !== 200) {
+                throw Error('IMEI/Code không hợp lệ');
+            }
+            return response.json();
+        })
+        .then(function(data) {
+            var message = data.message;
+            var resultText;
+            if (message === 'FIND XIAOMI ON') {
+                resultText = 'IMEI này là thiết bị Xiaomi đang bật';
+            } else if (message === 'FIND XIAOMI OFF') {
+                resultText = 'IMEI này là thiết bị Xiaomi đã tắt';
+            } else {
+                throw Error('Không thể xác định được trạng thái của thiết bị từ server');
+            }
+            document.getElementById('result').innerHTML = '<div class="alert alert-success" role="alert">' + resultText + '</div>';
+        })
+        .catch(function(error) {
+            document.getElementById('result').innerHTML = '<div class="alert alert-danger" role="alert">' + error.message + '</div>';
+        });
+}
+    </script>
+</body>
 </html>
