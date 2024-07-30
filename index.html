@@ -44,13 +44,15 @@ function checkIMEI() {
             var message = data.message;
             var resultText;
             if (message === 'FIND XIAOMI ON') {
-                resultText = 'IMEI này là thiết bị Xiaomi đang bật';
+                resultText = 'Tìm Xiaomi đang bật';
+                document.getElementById('result').innerHTML = '<div class="alert alert-danger" role="alert">' + resultText + '</div>';
             } else if (message === 'FIND XIAOMI OFF') {
-                resultText = 'IMEI này là thiết bị Xiaomi đã tắt';
+                resultText = 'Tìm Xiaomi đã tắt';
+                document.getElementById('result').innerHTML = '<div class="alert alert-success" role="alert">' + resultText + '</div>';
             } else {
                 throw Error('Không thể xác định được trạng thái của thiết bị từ server');
             }
-            document.getElementById('result').innerHTML = '<div class="alert alert-success" role="alert">' + resultText + '</div>';
+            
         })
         .catch(function(error) {
             document.getElementById('result').innerHTML = '<div class="alert alert-danger" role="alert">' + error.message + '</div>';
